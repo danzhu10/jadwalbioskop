@@ -55,9 +55,13 @@ public class GridLayoutAdapter extends RecyclerView.Adapter<GridLayoutAdapter.Vi
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, CinemaListActivity.class)
-                        .putExtra("data",dataMovie));
+                if(Utils.IsNetworkConnected(context)) {
+                    context.startActivity(new Intent(context, CinemaListActivity.class)
+                            .putExtra("data", dataMovie));
 //                Utils.toastLong(context,dataMovie.getMovie());
+                }else {
+                    Utils.toastLong(context,"Sorry no internet connection");
+                }
             }
         });
     }

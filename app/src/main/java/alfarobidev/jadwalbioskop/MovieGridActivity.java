@@ -32,6 +32,7 @@ public class MovieGridActivity extends BaseActivity {
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         setContentView(R.layout.grid_recycler);
+        initToolbar();
         ButterKnife.bind(this);
         data = (City.Data) getIntent().getSerializableExtra("city");
         //noinspection ConstantConditions
@@ -40,12 +41,17 @@ public class MovieGridActivity extends BaseActivity {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(gridLayoutManager);
-        getMovieGrid();
+        if(Utils.IsNetworkConnected(this)) {
+            getMovieGrid();
+        }else {
+            dialogNet();
+        }
     }
 
     private void getMovieGrid() {
         final ProgressDialog dialog = Utils.getWaitDialog(MovieGridActivity.this,"Loading...");
         dialog.show();
+        dialog.setCancelable(false);
         RestApi restApi = RestApi.retrofit.create(RestApi.class);
         restApi.getMovie(data.getId()).enqueue(new Callback<Movie>() {
             @Override

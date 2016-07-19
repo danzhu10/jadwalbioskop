@@ -1,6 +1,7 @@
 package alfarobidev.jadwalbioskop;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -41,7 +42,10 @@ public class CinemaListActivity extends Activity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                Movie.Schedule schedule =(Movie.Schedule) listView.getAdapter().getItem(position);
+                startActivity(new Intent(getApplicationContext(),MovieDetailActivity.class)
+                .putExtra("schedule",schedule)
+                .putExtra("data",data));
             }
         });
     }

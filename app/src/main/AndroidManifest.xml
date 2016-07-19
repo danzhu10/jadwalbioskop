@@ -21,6 +21,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".MovieGridActivity"/>
+        <activity android:name=".MovieDetailActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity android:name=".CinemaListActivity"
             android:theme="@style/Theme.AppCompat.Dialog"/>
     </application>

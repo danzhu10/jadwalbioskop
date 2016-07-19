@@ -2,7 +2,10 @@ package alfarobidev.jadwalbioskop;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,27 +34,55 @@ public class MovieDetailActivity extends BaseActivity {
     ImageView coverIV;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
+    int width, height;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_movie);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-        Movie.DataMovie data = (Movie.DataMovie) getIntent().getSerializableExtra("data");
-        Movie.Schedule schedule = (Movie.Schedule) getIntent().getSerializableExtra("schedule");
+        initToolbar();
+        WindowManager wm = (WindowManager) getSystemService(WINDOW_SERVICE);
+        final DisplayMetrics displayMetrics = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(displayMetrics);
+//        int height = displayMetrics.heightPixels;
+//        int width = displayMetrics.widthPixels;
+//
+        data = (Movie.DataMovie) getIntent().getSerializableExtra("data");
+        schedule = (Movie.Schedule) getIntent().getSerializableExtra("schedule");
         cinemaTV.setText(schedule.getBioskop());
         titleTV.setText(data.getMovie());
-        actTV.setText(data.getGenre()+" | "+data.getDuration());
-        for (int i=0;i<schedule.getTimeList().size();i++){
-            timeTV.append(schedule.getTimeList().get(i)+"\n");
+        actTV.setText(data.getGenre() + " | " + data.getDuration());
+        for (int i = 0; i < schedule.getTimeList().size(); i++) {
+            String time=null;
+            time = schedule.getTimeList().get(i);
+            if(i<schedule.getTimeList().size()-1){
+                 time+= " | ";
+            }
+            timeTV.append(time);
         }
         priceTV.setText(schedule.getHarga());
-        int width = coverIV.getWidth();
-        int height = coverIV.getHeight();
-        Log.d("gambar", width + " " + height);
+        coverIV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+    }
+    Movie.DataMovie data;
+    Movie.Schedule schedule;
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        width = coverIV.getWidth();
+        height = coverIV.getHeight();
+        Log.d("gambar2", width + " " + height);
+
         Picasso.with(this).load(data.getPoster()).error(R.mipmap.ic_launcher)
-                .fit()
-                .centerInside()
+                .resize(width, height)
+                .centerCrop()
                 .into(coverIV);
     }
 }

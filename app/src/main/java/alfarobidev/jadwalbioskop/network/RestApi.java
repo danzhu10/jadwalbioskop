@@ -18,7 +18,6 @@ import retrofit2.http.Query;
  * Created by Alfarobi on 5/31/16.
  */
 public interface RestApi {
-//    String BASE_URL = "http://192.168.57.1/order/";
     String BASE_URL = "http://ibacor.com/api/";
     Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(BASE_URL)

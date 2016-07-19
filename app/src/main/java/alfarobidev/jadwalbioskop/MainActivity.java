@@ -39,12 +39,13 @@ public class MainActivity extends BaseActivity
     List<City.Data> dataList = new ArrayList<>();
     CityAdapter adapter;
     ProgressDialog dialog;
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         context=this;
 

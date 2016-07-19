@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,8 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import tr.xip.errorview.ErrorView;
+import tr.xip.errorview.RetryListener;
 
 /**
  * Created by Alfarobi on 7/17/16.
@@ -27,6 +30,8 @@ public class MovieGridActivity extends BaseActivity {
     @Bind(R.id.recyclerView)RecyclerView recyclerView;
     List<Movie.DataMovie> dataMovieList = new ArrayList<>();
     City.Data data;
+    @Bind(R.id.errorView)
+    ErrorView errorView;
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
@@ -36,11 +41,21 @@ public class MovieGridActivity extends BaseActivity {
         ButterKnife.bind(this);
         data = (City.Data) getIntent().getSerializableExtra("city");
         //noinspection ConstantConditions
-        getSupportActionBar().setSubtitle(data.getKota());
-        Log.d("yoi",data.getId());
+        Log.d("yoi", data.getId());
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(gridLayoutManager);
+        initView();
+        errorView.setVisibility(View.GONE);
+        errorView.setOnRetryListener(new RetryListener() {
+            @Override
+            public void onRetry() {
+                initView();
+            }
+        });
+    }
+
+    private void initView() {
         if(Utils.IsNetworkConnected(this)) {
             getMovieGrid();
         }else {
@@ -59,6 +74,7 @@ public class MovieGridActivity extends BaseActivity {
                 dialog.dismiss();
                 Movie movie = response.body();
                 Log.d("yoi",movie.getKota());
+                getSupportActionBar().setSubtitle(data.getKota()+" "+movie.getDate());
                 if(movie.getStatus().equals("success")){
                     for(int i=0; i<movie.getDataMovies().size(); i++){
                         Movie.DataMovie dataMovie = movie.getDataMovies().get(i);
@@ -71,6 +87,7 @@ public class MovieGridActivity extends BaseActivity {
 
             @Override
             public void onFailure(Call<Movie> call, Throwable t) {
+                errorView.setVisibility(View.VISIBLE);
                 dialog.dismiss();
                 Utils.toastLong(getApplicationContext(),t.getMessage());
             }

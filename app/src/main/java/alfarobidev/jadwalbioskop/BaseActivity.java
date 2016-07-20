@@ -2,6 +2,7 @@ package alfarobidev.jadwalbioskop;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +18,37 @@ public class BaseActivity extends AppCompatActivity{
         if(getSupportActionBar()!=null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+    }
+
+    public void goToPlaystore(){
+        final String appPackageName = "com.math.sd"; // getPackageName() from Context or Activity object
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+        } catch (android.content.ActivityNotFoundException anfe) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+        }
+    }
+
+    public void aboutUs(){
+        new MaterialDialog.Builder(BaseActivity.this).titleColor(Color.BLACK)
+                .itemColorRes(R.color.colorPrimary)
+                .positiveText("Ok")
+                .title("About Us")
+                .content("API from ibacor.com/api\ngithub.com/danzhu10/jadwalbioskop")
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        super.onPositive(dialog);
+
+                    }
+
+                    @Override
+                    public void onNegative(MaterialDialog dialog) {
+                        super.onNegative(dialog);
+                    }
+                })
+                .build()
+                .show();
     }
 
     public void dialogNet() {

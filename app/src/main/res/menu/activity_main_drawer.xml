@@ -3,11 +3,11 @@
 
     <item
         android:id="@+id/feedback"
-        android:icon="@drawable/ic_menu_camera"
+        android:icon="@android:drawable/ic_dialog_email"
         android:title="Feedback" />
     <item
         android:id="@+id/about"
-        android:icon="@drawable/ic_menu_gallery"
+        android:icon="@android:drawable/ic_dialog_info"
         android:title="About" />
 
 

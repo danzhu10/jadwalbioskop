@@ -18,7 +18,6 @@
         errorview:ev_showTitle="true"
         errorview:ev_showSubtitle="true"
         errorview:ev_showRetryButton="true"
-        errorview:ev_retryButtonText="Retry"
         errorview:ev_errorTitle="Upss"
         errorview:ev_errorSubtitle="Sorry there is an error" />
 </RelativeLayout>

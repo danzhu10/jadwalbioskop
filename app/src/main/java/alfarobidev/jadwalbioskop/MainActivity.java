@@ -65,17 +65,10 @@ public class MainActivity extends BaseActivity
         errorView.setOnRetryListener(new RetryListener() {
             @Override
             public void onRetry() {
-                initView();
+                getCity();
             }
         });
-    }
-
-    private void initView() {
-        if(Utils.IsNetworkConnected(this)){
-            getCity();
-        }else {
-            dialogNet();
-        }
+        getCity();
     }
 
     private void initRecycler() {
@@ -129,6 +122,7 @@ public class MainActivity extends BaseActivity
             @Override
             public void onFailure(Call<City> call, Throwable t) {
                 errorView.setVisibility(View.VISIBLE);
+                fastScroller.setVisibility(View.GONE);
                 dialog.dismiss();
                 Utils.toastLong(context,"Failed to get server "+ t.getMessage());
             }

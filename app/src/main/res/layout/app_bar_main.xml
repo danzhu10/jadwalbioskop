@@ -57,7 +57,6 @@
             app:ev_showTitle="true"
             app:ev_showSubtitle="true"
             app:ev_showRetryButton="true"
-            app:ev_retryButtonText="Retry"
             app:ev_errorTitle="Upss"
             app:ev_errorSubtitle="Sorry there is an error" />
     </RelativeLayout>

@@ -45,22 +45,14 @@ public class MovieGridActivity extends BaseActivity {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(gridLayoutManager);
-        initView();
+        getMovieGrid();
         errorView.setVisibility(View.GONE);
         errorView.setOnRetryListener(new RetryListener() {
             @Override
             public void onRetry() {
-                initView();
+                getMovieGrid();
             }
         });
-    }
-
-    private void initView() {
-        if(Utils.IsNetworkConnected(this)) {
-            getMovieGrid();
-        }else {
-            dialogNet();
-        }
     }
 
     private void getMovieGrid() {

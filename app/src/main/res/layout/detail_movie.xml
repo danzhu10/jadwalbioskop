@@ -21,6 +21,7 @@
     android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#f9f9f9"
     android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout
@@ -73,14 +74,18 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp">
+                android:layout_margin="5dp">
 
                 <LinearLayout
+                    android:padding="10dp"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <TextView
+                        android:drawablePadding="5dip"
+                        android:drawableLeft="@drawable/cinem"
+                        android:gravity="center_vertical"
                         android:id="@+id/cinemaTV"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -100,11 +105,26 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
                         android:text="Action | 120 minute" />
-                    <TextView
+
+                    <LinearLayout
+                        android:layout_marginTop="5dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
-                        android:text="Jam" />
+                        android:gravity="center_vertical">
+                        <ImageView
+                            android:id="@+id/clock"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/clock"/>
+                        <TextView
+                            android:layout_marginLeft="5dp"
+                            android:gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
+                            android:text="Jam" />
+                    </LinearLayout>
+
                     <TextView
                         android:id="@+id/timeTV"
                         android:layout_width="match_parent"
@@ -119,18 +139,21 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp">
+                android:layout_gravity="center_vertical"
+                android:layout_margin="5dp">
                 <TextView
+                    android:padding="10dp"
+                    android:drawablePadding="3dp"
+                    android:drawableLeft="@drawable/price"
                     android:id="@+id/priceTV"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                    android:textColor="@android:color/holo_red_dark"
+                    android:textColor="@android:color/holo_green_dark"
                     android:text="Rp. 25.000,00" />
             </android.support.v7.widget.CardView>
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
-
 
 </android.support.design.widget.CoordinatorLayout>

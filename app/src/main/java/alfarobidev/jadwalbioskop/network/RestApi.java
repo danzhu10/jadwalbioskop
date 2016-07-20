@@ -34,8 +34,4 @@ public interface RestApi {
     @GET("jadwal-bioskop")
     Call<Movie> getMovie(@Query("id") String id);
 
-    @FormUrlEncoded
-    @POST("xxx")
-    Call<Movie> postParam(@Field("id") String id);
-
 }

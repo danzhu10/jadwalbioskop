@@ -2,6 +2,7 @@ package alfarobidev.jadwalbioskop.adapter;
 
 import android.content.Context;
 import android.support.v4.app.FragmentActivity;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,7 +58,7 @@ public class CinemaAdapter extends BaseAdapter {
         }else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.textView.setText(dataMovie.getBioskop());
+        viewHolder.textView.setText(Html.fromHtml(dataMovie.getBioskop()));
         return convertView;
     }
 }

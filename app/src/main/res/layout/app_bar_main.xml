@@ -48,6 +48,18 @@
             android:layout_alignParentRight="true"
             android:layout_alignTop="@+id/recyclerView"
             />
+
+        <tr.xip.errorview.ErrorView
+            android:layout_centerInParent="true"
+            android:id="@+id/errorView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:ev_showTitle="true"
+            app:ev_showSubtitle="true"
+            app:ev_showRetryButton="true"
+            app:ev_retryButtonText="Retry"
+            app:ev_errorTitle="Upss"
+            app:ev_errorSubtitle="Sorry there is an error" />
     </RelativeLayout>
     </LinearLayout>
 

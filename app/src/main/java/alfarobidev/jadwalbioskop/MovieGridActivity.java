@@ -72,6 +72,7 @@ public class MovieGridActivity extends BaseActivity {
             @Override
             public void onResponse(Call<Movie> call, Response<Movie> response) {
                 dialog.dismiss();
+                errorView.setVisibility(View.GONE);
                 Movie movie = response.body();
                 Log.d("yoi",movie.getKota());
                 getSupportActionBar().setSubtitle(data.getKota()+" "+movie.getDate());

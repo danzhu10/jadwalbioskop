@@ -29,12 +29,15 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import tr.xip.errorview.ErrorView;
+import tr.xip.errorview.RetryListener;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Bind(R.id.recyclerView)RecyclerView recyclerView;
     @Bind(R.id.fastscroller)RecyclerViewFastScroller fastScroller;
+    @Bind(R.id.errorView) ErrorView errorView;
     Context context;
     List<City.Data> dataList = new ArrayList<>();
     CityAdapter adapter;
@@ -57,13 +60,22 @@ public class MainActivity extends BaseActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        initRecycler();
+        errorView.setVisibility(View.GONE);
+        errorView.setOnRetryListener(new RetryListener() {
+            @Override
+            public void onRetry() {
+                initView();
+            }
+        });
+    }
+
+    private void initView() {
         if(Utils.IsNetworkConnected(this)){
             getCity();
         }else {
             dialogNet();
         }
-
-        initRecycler();
     }
 
     private void initRecycler() {
@@ -98,6 +110,7 @@ public class MainActivity extends BaseActivity
         restApi.getCity().enqueue(new Callback<City>() {
             @Override
             public void onResponse(Call<City> call, Response<City> response) {
+                errorView.setVisibility(View.GONE);
                 dialog.dismiss();
                 dataList.clear();
                 City city = response.body();
@@ -115,6 +128,7 @@ public class MainActivity extends BaseActivity
 
             @Override
             public void onFailure(Call<City> call, Throwable t) {
+                errorView.setVisibility(View.VISIBLE);
                 dialog.dismiss();
                 Utils.toastLong(context,"Failed to get server "+ t.getMessage());
             }

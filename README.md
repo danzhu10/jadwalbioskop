@@ -2,7 +2,7 @@
 
 Aplikasi android untuk melihat jadwal bioskop XXI menggunakan API dari [api.ibacor.com](http://ibacor.com/api#bcr-jadwal-bioskop)
 
-![Screenshot](http://imgur.com/Fa3FZEQ""Screenshot"")
+![Screenshot](http://imgur.com/Fa3FZEQ "Screenshot")
 
 # Libraries
 

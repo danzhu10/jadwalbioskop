@@ -21,7 +21,7 @@ public class BaseActivity extends AppCompatActivity{
     }
 
     public void goToPlaystore(){
-        final String appPackageName = "com.math.sd"; // getPackageName() from Context or Activity object
+        final String appPackageName = "alfarobidev.jadwalbioskop"; // getPackageName() from Context or Activity object
         try {
             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
         } catch (android.content.ActivityNotFoundException anfe) {

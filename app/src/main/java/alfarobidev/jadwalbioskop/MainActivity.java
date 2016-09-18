@@ -19,6 +19,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,9 +45,11 @@ public class MainActivity extends BaseActivity
     @Bind(R.id.recyclerView)RecyclerView recyclerView;
     @Bind(R.id.fastscroller)RecyclerViewFastScroller fastScroller;
     @Bind(R.id.errorView) ErrorView errorView;
+    @Bind(R.id.adView)
+    AdView adView;
     Context context;
     List<City.Data> dataList = new ArrayList<>();
-    CityAdapter adapter;
+    CityAdapter adapter; //tesssssss
     ProgressDialog dialog;
     Toolbar toolbar;
 
@@ -52,6 +58,11 @@ public class MainActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        MobileAds.initialize(this,getResources().getString(R.string.banner_ad_unit_id));
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .build();
+        adView.loadAd(adRequest);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         context=this;

@@ -2,26 +2,16 @@ package alfarobidev.jadwalbioskop;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
-
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +19,7 @@ import java.util.List;
 import alfarobidev.jadwalbioskop.adapter.CityAdapter;
 import alfarobidev.jadwalbioskop.component.RecyclerViewFastScroller;
 import alfarobidev.jadwalbioskop.model.City;
+import alfarobidev.jadwalbioskop.network.ApiService;
 import alfarobidev.jadwalbioskop.network.RestApi;
 import alfarobidev.jadwalbioskop.util.Utils;
 import butterknife.Bind;
@@ -45,8 +36,6 @@ public class MainActivity extends BaseActivity
     @Bind(R.id.recyclerView)RecyclerView recyclerView;
     @Bind(R.id.fastscroller)RecyclerViewFastScroller fastScroller;
     @Bind(R.id.errorView) ErrorView errorView;
-    @Bind(R.id.adView)
-    AdView adView;
     Context context;
     List<City.Data> dataList = new ArrayList<>();
     CityAdapter adapter; //tesssssss
@@ -58,11 +47,6 @@ public class MainActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        MobileAds.initialize(this,getResources().getString(R.string.banner_ad_unit_id));
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .build();
-        adView.loadAd(adRequest);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         context=this;
@@ -115,12 +99,15 @@ public class MainActivity extends BaseActivity
     }
 
     private void getCity() {
+        fastScroller.setVisibility(View.GONE);
         dialog = Utils.getWaitDialog(context,"Loading...");
         dialog.show();
-        RestApi restApi = RestApi.retrofit.create(RestApi.class);
+        dialog.setCancelable(false);
+        RestApi restApi = ApiService.createService(RestApi.class);
         restApi.getCity().enqueue(new Callback<City>() {
             @Override
             public void onResponse(Call<City> call, Response<City> response) {
+                fastScroller.setVisibility(View.VISIBLE);
                 errorView.setVisibility(View.GONE);
                 dialog.dismiss();
                 dataList.clear();
@@ -142,7 +129,6 @@ public class MainActivity extends BaseActivity
                 errorView.setVisibility(View.VISIBLE);
                 fastScroller.setVisibility(View.GONE);
                 dialog.dismiss();
-                Utils.toastLong(context,"Failed to get server "+ t.getMessage());
             }
         });
     }

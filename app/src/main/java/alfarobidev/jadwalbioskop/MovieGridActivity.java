@@ -13,6 +13,7 @@ import java.util.List;
 import alfarobidev.jadwalbioskop.adapter.GridLayoutAdapter;
 import alfarobidev.jadwalbioskop.model.City;
 import alfarobidev.jadwalbioskop.model.Movie;
+import alfarobidev.jadwalbioskop.network.ApiService;
 import alfarobidev.jadwalbioskop.network.RestApi;
 import alfarobidev.jadwalbioskop.util.Utils;
 import butterknife.Bind;
@@ -59,7 +60,7 @@ public class MovieGridActivity extends BaseActivity {
         final ProgressDialog dialog = Utils.getWaitDialog(MovieGridActivity.this,"Loading...");
         dialog.show();
         dialog.setCancelable(false);
-        RestApi restApi = RestApi.retrofit.create(RestApi.class);
+        RestApi restApi = ApiService.createService(RestApi.class);
         restApi.getMovie(data.getId()).enqueue(new Callback<Movie>() {
             @Override
             public void onResponse(Call<Movie> call, Response<Movie> response) {
@@ -82,7 +83,6 @@ public class MovieGridActivity extends BaseActivity {
             public void onFailure(Call<Movie> call, Throwable t) {
                 errorView.setVisibility(View.VISIBLE);
                 dialog.dismiss();
-                Utils.toastLong(getApplicationContext(),t.getMessage());
             }
         });
     }

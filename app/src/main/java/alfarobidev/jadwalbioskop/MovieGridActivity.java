@@ -41,8 +41,6 @@ public class MovieGridActivity extends BaseActivity {
         initToolbar();
         ButterKnife.bind(this);
         data = (City.Data) getIntent().getSerializableExtra("city");
-        //noinspection ConstantConditions
-        Log.d("yoi", data.getId());
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(gridLayoutManager);
@@ -61,21 +59,22 @@ public class MovieGridActivity extends BaseActivity {
         dialog.show();
         dialog.setCancelable(false);
         RestApi restApi = ApiService.createService(RestApi.class);
-        restApi.getMovie(data.getId()).enqueue(new Callback<Movie>() {
+        restApi.getMovie(data.getId(),ApiService.API).enqueue(new Callback<Movie>() {
             @Override
             public void onResponse(Call<Movie> call, Response<Movie> response) {
                 dialog.dismiss();
                 errorView.setVisibility(View.GONE);
                 Movie movie = response.body();
-                Log.d("yoi",movie.getKota());
                 getSupportActionBar().setSubtitle(data.getKota()+" "+movie.getDate());
                 if(movie.getStatus().equals("success")){
                     for(int i=0; i<movie.getDataMovies().size(); i++){
                         Movie.DataMovie dataMovie = movie.getDataMovies().get(i);
-                        Log.d("yoi",dataMovie.getDuration());
                         dataMovieList.add(dataMovie);
                     }
                     recyclerView.setAdapter(new GridLayoutAdapter(MovieGridActivity.this, dataMovieList, data));
+                }else {
+                    errorView.setVisibility(View.VISIBLE);
+                    dialog.dismiss();
                 }
             }
 

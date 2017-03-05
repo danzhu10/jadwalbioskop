@@ -16,6 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiService {
 
     private static String BASE_URL = "http://ibacor.com/api/";
+    public static String API = "2d8d020bb8103f3b12d3499fabe13b24";
     public static <S> S createService(Class<S> serviceClass){
 
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();

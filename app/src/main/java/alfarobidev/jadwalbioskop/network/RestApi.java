@@ -11,10 +11,10 @@ import retrofit2.http.Query;
  */
 public interface RestApi {
 
-    @GET("jadwal-bioskop")
+    @GET("jadwal-bioskop?k=2d8d020bb8103f3b12d3499fabe13b24")
     Call<City> getCity();
 
     @GET("jadwal-bioskop")
-    Call<Movie> getMovie(@Query("id") String id);
+    Call<Movie> getMovie(@Query("id") String id,@Query("k") String api);
 
 }
